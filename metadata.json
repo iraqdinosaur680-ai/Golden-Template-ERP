@@ -1,0 +1,6 @@
+{
+  "name": "Golden Template - القالب الذهبي",
+  "description": "System for manufacturing, sales, inventory, accounting, payroll, and debt management in Arabic and English.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

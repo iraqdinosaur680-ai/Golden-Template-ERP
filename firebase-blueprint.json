@@ -1,0 +1,242 @@
+{
+  "entities": {
+    "UserEntity": {
+      "title": "User Account",
+      "description": "Represents an authenticated user account with role-based access permissions in the manufacturing and trading system.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for the user." },
+        "username": { "type": "string", "description": "Username used for system authentication." },
+        "fullName": { "type": "string", "description": "Display name of the employee or admin." },
+        "password": { "type": "string", "description": "Encrypted or stored password credentials." },
+        "role": { "type": "string", "description": "Role classification (ADMIN, CASHIER, ACCOUNTANT)." },
+        "isActive": { "type": "boolean", "description": "Whether the user account is active." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Account creation timestamp." }
+      },
+      "required": ["id", "username", "fullName", "role", "isActive", "createdAt"]
+    },
+    "ProductEntity": {
+      "title": "Product Item",
+      "description": "Represents a manufactured or traded product in inventory.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique product ID." },
+        "name": { "type": "string", "description": "Product display name." },
+        "sku": { "type": "string", "description": "Barcode or stock keeping unit code." },
+        "unit": { "type": "string", "description": "Unit of measurement (e.g. piece, kg, box)." },
+        "quantity": { "type": "number", "description": "Available stock quantity." },
+        "minStock": { "type": "number", "description": "Low-stock alert threshold." },
+        "isAvailable": { "type": "boolean", "description": "Whether product is active for sales." },
+        "purchasePrice": { "type": "number", "description": "Cost of purchasing unit." },
+        "sellingPrice": { "type": "number", "description": "Price sold to customers." },
+        "calculatedProductionCost": { "type": "number", "description": "Sum of cost components." },
+        "effectiveProductionCost": { "type": "number", "description": "Effective cost used for profit calculations." },
+        "createdAt": { "type": "string", "description": "Creation date." },
+        "updatedAt": { "type": "string", "description": "Last update date." }
+      },
+      "required": ["id", "name", "sku", "unit", "quantity", "minStock", "sellingPrice"]
+    },
+    "SaleEntity": {
+      "title": "Sale Invoice",
+      "description": "Represents a customer sales invoice with line items, payments, and debt records.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique sale ID." },
+        "invoiceNo": { "type": "string", "description": "Formatted invoice number." },
+        "customerName": { "type": "string", "description": "Name of customer." },
+        "date": { "type": "string", "description": "Sale invoice date." },
+        "time": { "type": "string", "description": "Sale invoice time." },
+        "subtotal": { "type": "number", "description": "Gross invoice total." },
+        "discount": { "type": "number", "description": "Discount applied." },
+        "finalTotal": { "type": "number", "description": "Net total to pay." },
+        "paidAmount": { "type": "number", "description": "Amount paid." },
+        "debtAmount": { "type": "number", "description": "Remaining debt on invoice." },
+        "createdBy": { "type": "string", "description": "Username of creator." }
+      },
+      "required": ["id", "invoiceNo", "customerName", "date", "finalTotal", "paidAmount", "debtAmount", "createdBy"]
+    },
+    "PurchaseEntity": {
+      "title": "Purchase Invoice",
+      "description": "Represents a supplier purchase invoice for materials or stock.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique purchase ID." },
+        "invoiceNo": { "type": "string", "description": "Formatted supplier invoice number." },
+        "supplierName": { "type": "string", "description": "Supplier company name." },
+        "date": { "type": "string", "description": "Invoice date." },
+        "finalTotal": { "type": "number", "description": "Total amount." },
+        "paidAmount": { "type": "number", "description": "Paid amount." },
+        "debtAmount": { "type": "number", "description": "Remaining payable debt." },
+        "createdBy": { "type": "string", "description": "User who recorded purchase." }
+      },
+      "required": ["id", "invoiceNo", "supplierName", "date", "finalTotal", "paidAmount", "debtAmount", "createdBy"]
+    },
+    "ExpenseEntity": {
+      "title": "Expense Record",
+      "description": "Operating expenses, bills, and production service costs.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique expense ID." },
+        "category": { "type": "string", "description": "Expense category." },
+        "amount": { "type": "number", "description": "Amount in currency." },
+        "date": { "type": "string", "description": "Date of expense." },
+        "description": { "type": "string", "description": "Expense description or notes." },
+        "createdBy": { "type": "string", "description": "Username of recorder." }
+      },
+      "required": ["id", "category", "amount", "date", "description", "createdBy"]
+    },
+    "EmployeeEntity": {
+      "title": "Employee Profile",
+      "description": "Staff member profile, position, and base salary details.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique employee ID." },
+        "fullName": { "type": "string", "description": "Full name of staff member." },
+        "phone": { "type": "string", "description": "Phone number." },
+        "position": { "type": "string", "description": "Job title or position." },
+        "baseSalary": { "type": "number", "description": "Monthly base salary." },
+        "isActive": { "type": "boolean", "description": "Whether employee is currently active." },
+        "createdAt": { "type": "string", "description": "Hire date." }
+      },
+      "required": ["id", "fullName", "position", "baseSalary", "isActive", "createdAt"]
+    },
+    "AttendanceEntity": {
+      "title": "Attendance Record",
+      "description": "Daily employee attendance record.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique attendance ID." },
+        "employeeId": { "type": "string", "description": "Reference to employee ID." },
+        "date": { "type": "string", "description": "Date YYYY-MM-DD." },
+        "status": { "type": "string", "description": "PRESENT, ABSENT, LEAVE, OTHER." }
+      },
+      "required": ["id", "employeeId", "date", "status"]
+    },
+    "PayrollEntity": {
+      "title": "Payroll Record",
+      "description": "Monthly salary calculation and payment history for staff.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique payroll ID." },
+        "employeeId": { "type": "string", "description": "Employee ID." },
+        "employeeName": { "type": "string", "description": "Employee full name." },
+        "month": { "type": "string", "description": "Month YYYY-MM." },
+        "grossSalary": { "type": "number", "description": "Gross salary after bonus and deductions." },
+        "paidSalary": { "type": "number", "description": "Total amount paid so far." },
+        "remainingSalary": { "type": "number", "description": "Remaining unpaid balance." }
+      },
+      "required": ["id", "employeeId", "month", "grossSalary", "paidSalary", "remainingSalary"]
+    },
+    "CompanySettingsEntity": {
+      "title": "Company Settings",
+      "description": "Company branding, contact information, tax, and currency settings.",
+      "type": "object",
+      "properties": {
+        "companyName": { "type": "string", "description": "Company Latin name." },
+        "companyNameArabic": { "type": "string", "description": "Company Arabic name." },
+        "tagline": { "type": "string", "description": "Business tagline." },
+        "phone": { "type": "string", "description": "Phone numbers." },
+        "address": { "type": "string", "description": "Physical address." },
+        "currency": { "type": "string", "description": "Default currency code." },
+        "defaultLanguage": { "type": "string", "description": "Default language code." }
+      },
+      "required": ["companyNameArabic", "currency", "defaultLanguage"]
+    },
+    "PrintTemplateEntity": {
+      "title": "Print Template",
+      "description": "Invoice and report print layout configurations.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique template ID." },
+        "name": { "type": "string", "description": "Template name." },
+        "paperSize": { "type": "string", "description": "A4 or A5 paper format." },
+        "primaryColor": { "type": "string", "description": "Primary theme color." }
+      },
+      "required": ["id", "name", "paperSize", "primaryColor"]
+    },
+    "AuditLogEntity": {
+      "title": "Audit Log",
+      "description": "System event audit trail for actions, edits, and deletions.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique log ID." },
+        "username": { "type": "string", "description": "User who performed action." },
+        "action": { "type": "string", "description": "Action description." },
+        "entity": { "type": "string", "description": "Target entity name." },
+        "timestamp": { "type": "string", "description": "Formatted timestamp." }
+      },
+      "required": ["id", "username", "action", "entity", "timestamp"]
+    },
+    "DeviceSyncState": {
+      "title": "Device Sync State",
+      "description": "Represents the full application state synchronized across all authenticated client devices.",
+      "type": "object",
+      "properties": {
+        "state": {
+          "type": "string",
+          "description": "A serialized JSON string containing all persistent data (products, sales, purchases, debts, expenses, employees, settings, templates, etc.)."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ISO timestamp indicating when this record was last updated."
+        },
+        "clientSessionId": {
+          "type": "string",
+          "description": "Unique session ID generated by the client to prevent infinite update feedback loops."
+        }
+      },
+      "required": ["state", "updatedAt", "clientSessionId"]
+    }
+  },
+  "firestore": {
+    "/devices_sync/{syncKey}": {
+      "schema": "DeviceSyncState",
+      "description": "Collection containing real-time synchronized system states keyed by company syncKey."
+    },
+    "/users/{userId}": {
+      "schema": "UserEntity",
+      "description": "Collection storing user accounts and credentials."
+    },
+    "/products/{productId}": {
+      "schema": "ProductEntity",
+      "description": "Collection storing product records."
+    },
+    "/sales/{saleId}": {
+      "schema": "SaleEntity",
+      "description": "Collection storing sales invoices."
+    },
+    "/purchases/{purchaseId}": {
+      "schema": "PurchaseEntity",
+      "description": "Collection storing purchase invoices."
+    },
+    "/expenses/{expenseId}": {
+      "schema": "ExpenseEntity",
+      "description": "Collection storing expense records."
+    },
+    "/employees/{employeeId}": {
+      "schema": "EmployeeEntity",
+      "description": "Collection storing employee profiles."
+    },
+    "/attendance/{attendanceId}": {
+      "schema": "AttendanceEntity",
+      "description": "Collection storing attendance records."
+    },
+    "/payrolls/{payrollId}": {
+      "schema": "PayrollEntity",
+      "description": "Collection storing monthly payroll records."
+    },
+    "/settings/{settingsId}": {
+      "schema": "CompanySettingsEntity",
+      "description": "Collection storing company settings."
+    },
+    "/print_templates/{templateId}": {
+      "schema": "PrintTemplateEntity",
+      "description": "Collection storing invoice print templates."
+    },
+    "/audit_logs/{logId}": {
+      "schema": "AuditLogEntity",
+      "description": "Collection storing audit trail logs."
+    }
+  }
+}
